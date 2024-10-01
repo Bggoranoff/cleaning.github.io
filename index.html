@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cleaning Schedule</title>
+    <style>
+        table {
+            width: 50%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h2 style="text-align: center;">Weekly Cleaning Schedule</h2>
+    
+    <table id="schedule">
+        <thead>
+            <tr>
+                <th>Person</th>
+                <th>Assigned Task</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- The content will be filled dynamically -->
+        </tbody>
+    </table>
+
+    <script>
+        const tasks = ["Toilet", "Bathroom", "Kitchen", "Corridor"];
+        const people = ["Arda", "Boris", "Max", "Wuwei"];
+
+        function updateSchedule() {
+            const tbody = document.querySelector('#schedule tbody');
+            tbody.innerHTML = ''; // Clear existing content
+
+            const currentWeek = Math.floor((new Date().getTime()) / (1000 * 60 * 60 * 24 * 7));
+            
+            people.forEach((person, index) => {
+                // Calculate task assignment based on current week and person index
+                const taskIndex = (currentWeek + index) % tasks.length;
+                const task = tasks[taskIndex];
+                
+                const row = document.createElement('tr');
+                const personCell = document.createElement('td');
+                const taskCell = document.createElement('td');
+                
+                personCell.textContent = person;
+                taskCell.textContent = task;
+                
+                row.appendChild(personCell);
+                row.appendChild(taskCell);
+                tbody.appendChild(row);
+            });
+        }
+
+        // Call the function initially to populate the table
+        updateSchedule();
+        
+        // Optionally, you can auto-refresh the schedule every minute to reflect any weekly changes
+        setInterval(updateSchedule, 60 * 1000); // Update every minute to capture weekly changes
+    </script>
+</body>
+</html>
